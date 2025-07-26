@@ -1,12 +1,14 @@
-'use client';
+'use client'; // ✅ Mark this as a client component
+
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
-export default function ProfilePage() {
+function ProfileContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
+
   const id = searchParams.get('id'); // 👈 IDOR point
 
   useEffect(() => {
@@ -31,16 +33,23 @@ export default function ProfilePage() {
   if (!profile) return <div className="p-4">Loading profile...</div>;
 
   return (
+    <div className="bg-white p-6 rounded shadow-md w-80 text-left">
+      <p><strong>Username:</strong> {profile.username}</p>
+      <p><strong>Role:</strong> {profile.role}</p>
+      <p><strong>User ID:</strong> {profile.id}</p>
+    </div>
+  );
+}
+
+export default function ProfilePage() {
+  return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-black">
       <h1 className="text-3xl font-bold mb-4">User Profile</h1>
-      <div className="bg-white p-6 rounded shadow-md w-80 text-left">
-        <Suspense>
-        <p><strong>Username:</strong> {profile.username}</p>
-        <p><strong>Role:</strong> {profile.role}</p>
-        <p><strong>User ID:</strong> {profile.id}</p>
-        </Suspense>
-       
-      </div>
+
+      {/* ✅ Wrap the client component inside Suspense */}
+      <Suspense fallback={<div>Loading search params...</div>}>
+        <ProfileContent />
+      </Suspense>
     </main>
   );
 }
