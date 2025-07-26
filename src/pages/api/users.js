@@ -5,6 +5,7 @@ export default function handler(req, res) {
       db_user: process.env.DB_USER,
       db_password: process.env.DB_PASSWORD,
       db_name: process.env.DB_NAME,
+      port: process.env.DB_PORT,
       secret_key: process.env.SECRET_KEY || 'default_secret',
     };
   
