@@ -1,7 +1,7 @@
-'use client'; // ✅ Mark this as a client component
+'use client';
 
-import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect, useState, Suspense } from 'react';
 
 function ProfileContent() {
   const searchParams = useSearchParams();
@@ -9,7 +9,7 @@ function ProfileContent() {
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
 
-  const id = searchParams.get('id'); // 👈 IDOR point
+  const id = searchParams.get('id');
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -46,7 +46,7 @@ export default function ProfilePage() {
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-black">
       <h1 className="text-3xl font-bold mb-4">User Profile</h1>
 
-      {/* ✅ Wrap the client component inside Suspense */}
+      {/* ✅ Suspense works in client components too */}
       <Suspense fallback={<div>Loading search params...</div>}>
         <ProfileContent />
       </Suspense>
